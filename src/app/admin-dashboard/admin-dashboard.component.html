@@ -1,0 +1,91 @@
+<!-- admin-dashboard.component.html -->
+<div class="container">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Room Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let room of availableRooms">
+            <td>{{ room.name }}</td>
+            <td>{{ room.description }}</td>
+            <td>{{ room.price | currency }}</td>
+            <td>
+              <button class="btn btn-primary" (click)="onEditRoom(room)">Edit</button>
+                
+              <button class="btn btn-sm btn-danger" (click)="onDeleteRoom(room._id)">
+                Delete
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <form [formGroup]="addRoomForm" class="add-room-form">
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Room Name" formControlName="name">
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Description" formControlName="description">
+        </div>
+        <div class="col">
+          <input type="number" class="form-control" placeholder="Price" formControlName="price">
+        </div>
+        <div class="col">
+          <button class="btn btn-primary" (click)="onAddRoomSubmit()">Add Room</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="container">
+    <!-- Manager Button -->
+    <button class="btn btn-primary" (click)="toggleTable()">
+      Manager
+    </button>
+<!-- Edit Room Form -->
+<div *ngIf="selectedRoom">
+  <app-edit-form [room]="selectedRoom"></app-edit-form>
+</div>
+
+<div class="container">
+  <div *ngIf="showTable" class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Room Name</th>
+          <th>Check-In Date</th>
+          <th>Check-Out Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookings">
+          <td>{{ booking.userId }}</td>
+          <td>{{ booking.checkInDate | date }}</td>
+          <td>{{ booking.checkOutDate | date }}</td>
+          <td>{{ booking.status }}</td>
+          <td>
+            <button class="btn btn-sm btn-success" (click)="acceptBooking(booking._id)" *ngIf="booking.status === 'pending'">
+              Accept
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="rejectBooking(booking._id)" *ngIf="booking.status === 'pending'">
+              Reject
+            </button>
+            <button class="btn btn-sm btn-warning" (click)="cancelBooking(booking._id)" *ngIf="booking.status === 'pending' || booking.status === 'accepted'">
+              Cancel
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

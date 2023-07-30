@@ -1,0 +1,38 @@
+<!-- <div *ngFor="let room of availableRooms" class="room-card">
+    <h3>{{ room.name }}</h3>
+    <p>{{ room.description }}</p>
+    <p>Price: ${{ room.price }}</p>
+    <button (click)="selectedRoomId = room._id">Book Room</button>
+  </div>
+  
+  <div *ngIf="selectedRoomId">
+    <input type="date" [(ngModel)]="checkInDate" placeholder="Check-in Date">
+    <input type="date" [(ngModel)]="checkOutDate" placeholder="Check-out Date">
+    <button (click)="bookRoom()">Confirm Booking</button>
+  </div>
+   -->
+
+   <div *ngFor="let room of availableRooms" class="room-card">
+    <h3>{{ room.name }}</h3>
+    <p>{{ room.description }}</p>
+    <p>Price: ${{ room.price }}</p>
+    <button (click)="openBookingForm(room._id)">Book Room</button>
+  </div>
+  
+  <!-- Booking Form as a Modal -->
+  <div *ngIf="selectedRoomId" class="modal-container">
+    <div class="modal-content">
+      <h3>Booking Form</h3>
+      <form (ngSubmit)="bookRoom()" #bookingForm="ngForm">
+        <label for="checkInDate">Check-in Date:</label>
+        <input type="date" id="checkInDate" name="checkInDate" [(ngModel)]="checkInDate" required>
+  
+        <label for="checkOutDate">Check-out Date:</label>
+        <input type="date" id="checkOutDate" name="checkOutDate" [(ngModel)]="checkOutDate" required>
+  
+        <button type="submit">Confirm Booking</button>
+      </form>
+      <button (click)="closeBookingForm()">Cancel</button>
+    </div>
+  </div>
+  

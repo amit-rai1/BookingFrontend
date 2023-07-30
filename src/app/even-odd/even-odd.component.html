@@ -1,0 +1,12 @@
+<form [formGroup]="numberForm">
+    <input type="number" formControlName="number" placeholder="Enter a number">
+  
+    <div *ngIf="numberForm.valid && isEven(); else oddNumberMessage">
+      {{ numberForm.value.number }} is an even number.
+    </div>
+  
+    <ng-template #oddNumberMessage>
+      {{ numberForm.value.number }} is an odd number.
+    </ng-template>
+  </form>
+  
